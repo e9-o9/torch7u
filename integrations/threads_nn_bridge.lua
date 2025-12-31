@@ -37,6 +37,11 @@ function threads_nn_bridge.create_data_loader(n_threads, dataset, options)
         queue = {},
     }
     
+    -- Validate dataset interface
+    if not dataset or type(dataset.size) ~= 'function' then
+        error("Dataset must have a size() method")
+    end
+    
     -- Initialize thread pool
     function loader:init()
         self.pool = threads.Threads(

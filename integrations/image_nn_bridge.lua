@@ -254,6 +254,13 @@ function image_nn_bridge.create_batch_processor(preprocess_fn, batch_size)
     
     function processor:process_directory(directory, pattern)
         pattern = pattern or '*.jpg'
+        
+        -- Check if paths module is available
+        if not paths then
+            torch7u.utils.log('ERROR', 'paths module not available', 'image_nn_bridge')
+            return {}
+        end
+        
         local files = paths.dir(directory)
         
         local images = {}

@@ -154,11 +154,17 @@ end
 function nn_optim_bridge.create_training_loop(model, criterion, optimizer_method, config)
     config = config or {}
     
+    -- Separate optimizer config from training config
+    local optimizer_config = config.optimizer_config or {
+        learningRate = config.learningRate or 0.01,
+        momentum = config.momentum or 0.0,
+    }
+    
     local loop = {
         model = model,
         criterion = criterion,
         optimizer_method = optimizer_method or optim.sgd,
-        config = config,
+        config = optimizer_config,
         optimizer_state = {},
         epoch = 0,
         iteration = 0,

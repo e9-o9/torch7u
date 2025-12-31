@@ -66,7 +66,7 @@ end
 
 function test.test_configuration()
     -- Test configuration system
-    local original_type = torch7u.config.default_tensor_type
+    local original_type = torch7u.config.default_tensor_type or 'torch.DoubleTensor'
     
     torch7u.configure({
         default_tensor_type = 'torch.FloatTensor',

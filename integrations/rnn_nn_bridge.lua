@@ -380,9 +380,10 @@ end
 -- Sequence Generation
 -- ============================================================================
 
-function rnn_nn_bridge.generate_sequence(model, start_token, max_length, temperature)
+function rnn_nn_bridge.generate_sequence(model, start_token, max_length, temperature, end_token)
     temperature = temperature or 1.0
     max_length = max_length or 50
+    end_token = end_token or nil
     
     model:evaluate()
     
@@ -400,7 +401,7 @@ function rnn_nn_bridge.generate_sequence(model, start_token, max_length, tempera
         table.insert(sequence, next_token)
         
         -- Check for end token (if applicable)
-        if next_token == config.end_token then
+        if end_token and next_token == end_token then
             break
         end
         

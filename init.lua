@@ -43,6 +43,7 @@ function torch7u.load_module(module_name)
       torch7u.loaded_modules[module_name] = result
       if registry_entry then
          registry_entry.loaded = true
+         registry_entry.module = result
       end
       return result
    else
