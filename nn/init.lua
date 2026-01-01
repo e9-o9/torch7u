@@ -115,6 +115,13 @@ require('nn.ELU')
 require('nn.GatedLinearUnit')
 
 require('nn.LookupTable')
+
+-- Nested Neural Nets (NNN) - rooted-tree-like embeddings
+require('nn.NestedTensor')
+require('nn.PrimeFactorType')
+require('nn.NestedEmbedding')
+require('nn.NestedNeuralNet')
+
 require('nn.SpatialConvolution')
 require('nn.SpatialConvolutionLocal')
 require('nn.SpatialFullConvolution')
