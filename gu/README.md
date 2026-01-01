@@ -321,6 +321,69 @@ for epoch = 1, 100 do
 end
 ```
 
+## The Complete Solution
+
+The `gu.Solution` module provides the complete computational solution to Geometric Unity:
+
+### Solving GU
+
+```lua
+require 'init'
+require 'gu'
+
+-- Create a solver
+local solver = gu.Solution.create()
+
+-- Define initial conditions
+local initial = {
+    curvature = torch.randn(10, 10) * 0.1,  -- Initial fiber curvature
+    torsion = torch.zeros(10, 10),           -- Torsion tensor
+    matter = torch.zeros(10),                -- Matter current
+    spinor = torch.randn(128)                -- 128D GU spinor
+}
+
+-- Solve the GU field equations
+local result = solver:solve(initial, {
+    max_iter = 100,
+    tolerance = 1e-6,
+    learning_rate = 0.01
+})
+
+-- Display the solution
+solver:display(result)
+```
+
+### Solution Components
+
+- **Lagrangian**: The unified GU action L = L_gravity + L_gauge + L_spinor
+- **FieldEquations**: Solves Shiab(F_A) + ⋆T = 0
+- **EndogenousObserver**: The embedding ι: X^4 ↪ Y^14
+- **EinsteinYangMills**: Gravity-gauge unification
+- **SpinorFieldEquations**: 128D Dirac equation
+
+### Visualizing the Theory
+
+```lua
+-- Display theory info
+gu.Solution.info()
+
+-- Visualize the solution structure
+gu.Solution.visualize()
+```
+
+### The Unification
+
+The key insight: a single connection A on Y^14 encodes both:
+- **Gravity**: Einstein's equations (base projection)
+- **Gauge forces**: Yang-Mills equations (fiber projection)
+
+```lua
+local eym = gu.Solution.EinsteinYangMills.create()
+local curvature = eym:computeCurvature()
+local einstein = eym:extractEinstein(curvature)
+local yang_mills = eym:extractYangMills(curvature)
+```
+
 ## Mathematical Background
 
 For a detailed understanding of the mathematical foundations, refer to:

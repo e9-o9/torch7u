@@ -25,6 +25,12 @@ gu.GULayer = require 'gu.GULayer'
 -- Load Activations Module
 gu.activations = require 'gu.activations'
 
+-- Load Solution Module (Complete GU Solution)
+gu.Solution = require 'gu.Solution'
+
+-- Convenience: export Lagrangian to gu namespace
+gu.Lagrangian = gu.Solution.Lagrangian
+
 -- ============================================================================
 -- Constants
 -- ============================================================================
@@ -249,7 +255,7 @@ function gu.info()
     print(string.format("  Fiber Space:          %d", gu.FIBER_DIM))
     print(string.format("  Chimeric Bundle:      %d", gu.CHIMERIC_DIM))
     print(string.format("  GU Spinors:           %d", gu.SPINOR_DIM))
-    print("\nComponents:")
+    print("\nCore Components:")
     print("  - ObserverseTensor: Two-space structure (base + fiber)")
     print("  - ChimericBundle: 14D bundle vectors")
     print("  - ShiabOperator: Ship-in-a-bottle operator")
@@ -257,6 +263,13 @@ function gu.info()
     print("  - GaugeTransformer: Gauge transformations (tilted, Lie algebra, parallel transport)")
     print("  - GeneralizedGaugeTransformer: Full transformer architecture with multi-head attention")
     print("  - GULayer: Composite GU dynamics layer")
+    print("\nThe Solution (gu.Solution):")
+    print("  - Lagrangian: Unified GU action principle")
+    print("  - FieldEquations: Shiab(F_A) + *T = 0")
+    print("  - EndogenousObserver: Emergent spacetime embedding")
+    print("  - EinsteinYangMills: Gravity-gauge unification")
+    print("  - SpinorFieldEquations: 128D fermion dynamics")
+    print("  - CompleteSolution: Full GU solver")
     print("\nSpecialized Activations (gu.activations):")
     print("  - LieAlgebraActivation: Lie group structure-preserving")
     print("  - CurvatureGate: Curvature-aware gating")
@@ -269,6 +282,13 @@ function gu.info()
     print("  - Lie algebra parameterization with exponential map")
     print("  - Connection-based parallel transport")
     print("  - Curvature regularization")
+    print("=======================================================")
+    print("\nTo solve Geometric Unity:")
+    print("  local solver = gu.Solution.create()")
+    print("  local result = solver:solve(initial_conditions)")
+    print("  solver:display(result)")
+    print("\nFor theory visualization:")
+    print("  gu.Solution.visualize()")
     print("=======================================================")
 end
 
