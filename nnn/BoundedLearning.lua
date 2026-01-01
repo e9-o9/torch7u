@@ -399,6 +399,170 @@ Both are instances of:
 end
 
 -- ============================================================================
+-- The Category-Degree Duality (Maximal Contrast Principle)
+-- ============================================================================
+--
+-- A "good dict" (dictionary/correspondence) establishes MAXIMAL CONTRAST
+-- between Category and Degree:
+--
+--   CATEGORY (qualitative)              DEGREE (quantitative)
+--   ─────────────────────────────────────────────────────────
+--   Domain logic                        Metric resolution
+--   Stabilizes total space              Differential elements
+--   Structural invariants               Continuous variation
+--   "What kind"                         "How much"
+--
+-- THE STRUCTURE:
+--
+--   Total Space = Base ×_gauge Fiber
+--
+--   Where:
+--   • Base = differential manifold (resolved by Degree)
+--   • Fiber = Aut_Category(Base) = gauge symmetries preserving Category
+--   • Category = operations under which (Base, Fiber) transformations are invariant
+--
+-- KEY INSIGHT:
+--   Fiber ≅ Aut_Category(Base)
+--   The fiber IS the automorphism group of the base AS SEEN BY the category.
+--
+-- ============================================================================
+
+BoundedLearning.CategoryDegreeDuality = {
+    -- Category: qualitative, structural, invariant-preserving
+    category = {
+        role = 'domain_logic',
+        determines = 'total_space_stability',
+        property = 'qualitative',
+        examples = {
+            gu = 'Gauge group (SO, SU, Spin)',
+            gpt = 'Grammar/syntax rules'
+        }
+    },
+
+    -- Degree: quantitative, metric, differential
+    degree = {
+        role = 'metric_resolution',
+        determines = 'differential_elements',
+        property = 'quantitative',
+        examples = {
+            gu = 'Curvature magnitude, field strength',
+            gpt = 'Token probability, attention weight'
+        }
+    },
+
+    -- Base: the observable manifold
+    base = {
+        role = 'observable_manifold',
+        determined_by = 'degree_resolution',
+        property = 'differential',
+        examples = {
+            gu = '4D spacetime (X^4)',
+            gpt = 'Token sequence (context window)'
+        }
+    },
+
+    -- Fiber: the gauge symmetry composition
+    fiber = {
+        role = 'gauge_symmetry',
+        determined_by = 'category_invariance',
+        property = 'Aut_Category(Base)',
+        examples = {
+            gu = '10D metric fiber',
+            gpt = 'Latent embedding space'
+        }
+    }
+}
+
+-- Compute the "contrast" between category and degree aspects
+function BoundedLearning.contrast(category_strength, degree_resolution)
+    -- Maximal contrast when both are strong but orthogonal
+    -- Like eigenvalues of a well-conditioned matrix
+    local product = category_strength * degree_resolution
+    local sum = category_strength + degree_resolution
+
+    if sum == 0 then return 0 end
+
+    -- Harmonic mean penalizes imbalance, geometric mean rewards both
+    local harmonic = 2 * product / sum
+    local geometric = math.sqrt(product)
+
+    -- Contrast is high when both are strong AND balanced
+    return geometric * (harmonic / geometric)  -- = harmonic mean
+end
+
+-- The fundamental equation: Fiber ≅ Aut_Category(Base)
+function BoundedLearning.fiberFromCategory(base_dim, category_type)
+    -- Given a base dimension and category, compute the fiber dimension
+    -- This encodes: fiber = symmetries of base under category
+
+    local fiber_dims = {
+        -- GL(n) has n² parameters
+        GL = function(n) return n * n end,
+        -- SO(n) has n(n-1)/2 parameters
+        SO = function(n) return n * (n - 1) / 2 end,
+        -- SU(n) has n²-1 parameters
+        SU = function(n) return n * n - 1 end,
+        -- U(n) has n² parameters
+        U = function(n) return n * n end,
+        -- Spin(n) same as SO(n) (double cover)
+        Spin = function(n) return n * (n - 1) / 2 end
+    }
+
+    local compute = fiber_dims[category_type] or fiber_dims.SO
+    return compute(base_dim)
+end
+
+-- Visualize the Category-Degree duality
+function BoundedLearning.visualizeDuality()
+    print("╔═══════════════════════════════════════════════════════════════════╗")
+    print("║              CATEGORY-DEGREE DUALITY (Maximal Contrast)           ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   CATEGORY (qualitative)              DEGREE (quantitative)       ║")
+    print("║   ─────────────────────────────────────────────────────────────   ║")
+    print("║   • Domain logic                      • Metric resolution         ║")
+    print("║   • Stabilizes total space            • Differential elements     ║")
+    print("║   • Structural invariants             • Continuous variation      ║")
+    print("║   • \"What kind\"                       • \"How much\"               ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║                      TOTAL SPACE = Base ×_gauge Fiber             ║")
+    print("║                                                                   ║")
+    print("║                              ┌─────────┐                          ║")
+    print("║                              │  Total  │                          ║")
+    print("║                              │  Space  │                          ║")
+    print("║                              └────┬────┘                          ║")
+    print("║                         ┌────────┴────────┐                       ║")
+    print("║                         ▼                 ▼                       ║")
+    print("║                    ┌────────┐       ┌──────────┐                  ║")
+    print("║                    │  BASE  │       │  FIBER   │                  ║")
+    print("║                    │ (diff) │       │ (gauge)  │                  ║")
+    print("║                    └────┬───┘       └────┬─────┘                  ║")
+    print("║                         │                │                        ║")
+    print("║                         │   INVARIANT    │                        ║")
+    print("║                         └───────┬────────┘                        ║")
+    print("║                                 ▼                                 ║")
+    print("║                    ┌─────────────────────────┐                    ║")
+    print("║                    │    CATEGORICAL LOGIC    │                    ║")
+    print("║                    │  (preserving operations)│                    ║")
+    print("║                    └─────────────────────────┘                    ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   KEY EQUATION:  Fiber ≅ Aut_Category(Base)                       ║")
+    print("║                                                                   ║")
+    print("║   The fiber IS the automorphism group of the base                 ║")
+    print("║   AS SEEN BY the categorical logic.                               ║")
+    print("║                                                                   ║")
+    print("║   Examples:                                                       ║")
+    print("║   • GU:  Fiber(10D) = Aut_SO(Base(4D))  [metric symmetries]       ║")
+    print("║   • GPT: Latent = Aut_Grammar(Context)  [semantic symmetries]     ║")
+    print("║                                                                   ║")
+    print("╚═══════════════════════════════════════════════════════════════════╝")
+end
+
+-- ============================================================================
 -- Integration with NNN
 -- ============================================================================
 
