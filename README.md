@@ -1,6 +1,38 @@
-# Torch Aggregated Repository
+# Torch7u - Unified Torch7 Repository
 
-This repository contains all repositories from the [torch](https://github.com/torch) GitHub organization, aggregated as native code with version control metadata removed.
+This repository contains all repositories from the [torch](https://github.com/torch) GitHub organization, deeply integrated as a cohesive framework with interconnected features and functions.
+
+## ⚡ Key Features
+
+- **Deep Integration**: All components work together seamlessly through a unified integration layer
+- **Event-Driven Architecture**: Cross-module communication via a powerful event system
+- **Unified Configuration**: Shared settings across all components
+- **Model Registry**: Centralized model management
+- **Metrics & Monitoring**: Unified metrics collection across all modules
+- **Plugin System**: Extensible architecture for custom functionality
+- **Training Framework**: Integrated training interface that works across all modules
+
+## 🚀 Quick Start
+
+```lua
+-- Load the integrated torch7u system
+require 'init'
+
+-- Display integration information
+torch7u.info()
+
+-- Configure the system
+torch7u.configure({
+    default_tensor_type = 'torch.FloatTensor',
+    cuda_enabled = true
+})
+
+-- Use integrated features
+local model = nn.Sequential():add(nn.Linear(10, 5))
+torch7u.models.register('my_model', model)
+```
+
+See [INTEGRATION.md](INTEGRATION.md) for complete documentation and examples.
 
 ## Contents
 
@@ -68,6 +100,83 @@ This monorepo includes the following torch components:
 ## Source
 
 All code is sourced from https://github.com/torch
+
+## Integration Architecture
+
+Torch7u provides a comprehensive integration layer that connects all components:
+
+- **`init.lua`** - Main integration layer and unified entry point
+- **`integrations/`** - Module-specific integration bridges
+- **`INTEGRATION.md`** - Complete integration guide and documentation
+- **`test_integration.lua`** - Integration test suite
+- **`example_integration.lua`** - Example demonstrating deep integration
+
+Key integration features:
+- Module registry with dependency management
+- Event system for cross-module communication
+- Shared configuration across all components
+- Unified logging and metrics
+- Model registry for centralized management
+- Data pipelines that work across all modules
+- Plugin system for extensibility
+
+## Usage
+
+### Basic Usage
+
+```lua
+require 'init'  -- Load integrated torch7u system
+
+-- Use any torch module - they all work together
+local model = nn.Sequential()
+    :add(nn.Linear(784, 256))
+    :add(nn.ReLU())
+
+-- Register with integrated model registry
+torch7u.models.register('classifier', model)
+
+-- Use integrated training interface
+local trainer = torch7u.training.create_trainer(model, criterion, config)
+```
+
+### Integration Bridges
+
+The repository includes specialized integration bridges:
+
+```lua
+-- Load nn-optim integration
+local nn_optim = require 'integrations.nn_optim_bridge'
+local training_loop = nn_optim.create_training_loop(model, criterion, optimizer)
+
+-- Load image-nn integration  
+local image_nn = require 'integrations.image_nn_bridge'
+local pipeline = image_nn.create_preprocessing_pipeline(transforms)
+```
+
+### Running Tests
+
+```lua
+-- Run integration tests
+th test_integration.lua
+
+-- Run integration example
+th example_integration.lua
+```
+
+## Integration Benefits
+
+1. **Seamless Interoperability**: All modules work together without manual coordination
+2. **Event-Driven**: Modules communicate via events, enabling loose coupling
+3. **Unified Interfaces**: Common patterns for training, data loading, and model management
+4. **Centralized Configuration**: Single source of truth for all settings
+5. **Enhanced Functionality**: Integration adds features not available in individual modules
+6. **Extensible**: Plugin system allows easy addition of new features
+
+## Documentation
+
+- **[INTEGRATION.md](INTEGRATION.md)** - Complete integration guide
+- **[example_integration.lua](example_integration.lua)** - Working example
+- **Component README files** - Individual module documentation in subdirectories
 
 ## License
 
