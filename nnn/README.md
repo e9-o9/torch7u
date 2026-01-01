@@ -597,9 +597,100 @@ Display available GU integration features:
 nnn.gu.info()
 ```
 
+### Geonestor Neuroglyph
+
+A **Geonestor Neuroglyph** is a geometric nested tensor neural gauge-awareness symmetry structure - the unified formalism for NNN-GU integration.
+
+#### Components
+
+| Component | Meaning |
+|-----------|---------|
+| **GEO** | Geometric Unity (Observerse, gauge transformations, fiber bundles) |
+| **NESTOR** | Nested Tensor structures (recursive tree-shaped data) |
+| **NEURO** | Neural network operations (learnable transformations) |
+| **GLYPH** | Symbolic representation (type signatures, symmetry invariants) |
+
+#### Creating Neuroglyphs
+
+```lua
+local Neuroglyph = nnn.Neuroglyph
+
+-- Create directly
+local glyph = Neuroglyph.create({
+    name = 'my_glyph',
+    baseDim = 4,
+    fiberDim = 10,
+    gaugeGroup = 'SO',
+    depth = 2
+})
+
+-- From nested structure
+local nested = {gu.randomObserverse(4), {gu.randomObserverse(4)}}
+local glyph = nnn.gu.neuroglyph(nested, {name = 'derived'})
+
+-- From model
+local model = nnn.GUSequential()
+model:add(nnn.GULinear(10, 10))
+local glyph = nnn.gu.neuroglyphFromModel(model)
+```
+
+#### Neuroglyph API
+
+```lua
+-- Signatures and invariants
+glyph:signature()       -- "G[name:4|10|SO|d2]"
+glyph:primeSignature()  -- {base = {2,2}, fiber = {2,5}}
+
+-- Compatibility checks
+glyph:isGaugeCompatible(other)
+glyph:isStructurallyCompatible(other)
+
+-- Composition (tensor product)
+local composed = glyph:compose(other, {name = 'product'})
+
+-- Model generation
+local model = glyph:createModel({
+    numLayers = 3,
+    activation = 'tanh',
+    dropout = 0.1
+})
+
+-- Create specific layers
+local layer = glyph:createLayer('full', {use_swerve = true})
+
+-- Visualization
+glyph:visualize()  -- ASCII art display
+```
+
+#### Visualization Output
+
+```
+╔══════════════════════════════════════════════════════╗
+║            GEONESTOR NEUROGLYPH                      ║
+╠══════════════════════════════════════════════════════╣
+║  Name:      my_glyph                                 ║
+║  Type:      composite                                ║
+║  Signature: G[my_glyph:4|10|SO|d2]                   ║
+╠══════════════════════════════════════════════════════╣
+║  GEOMETRY                                            ║
+║    Base Space:    4-dimensional                      ║
+║    Fiber Space:   10-dimensional                     ║
+║    Chimeric Dim:  14-dimensional                     ║
+╠══════════════════════════════════════════════════════╣
+║  SYMMETRY                                            ║
+║    Gauge Group:   SO (Special Orthogonal)            ║
+║    Nesting Depth: 2                                  ║
+╠══════════════════════════════════════════════════════╣
+║  PRIME SIGNATURE                                     ║
+║    Base:  [2·2]                                      ║
+║    Fiber: [2·5]                                      ║
+╚══════════════════════════════════════════════════════╝
+```
+
 ### See Also
 
 - [gu_integration_example.lua](gu_integration_example.lua) - Comprehensive GU examples
+- [Neuroglyph.lua](Neuroglyph.lua) - Neuroglyph implementation
 - [GU README](../gu/README.md) - Geometric Unity module documentation
 
 ## Future Extensions

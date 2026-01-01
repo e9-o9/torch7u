@@ -1142,34 +1142,80 @@ function nnn.gu.randomNested(structure, batch_size)
     end
 end
 
+-- ============================================================================
+-- Geonestor Neuroglyph
+-- ============================================================================
+-- A Geonestor Neuroglyph is a geometric nested tensor neural gauge-awareness
+-- symmetry structure - the unified formalism for NNN-GU integration.
+-- ============================================================================
+
+nnn.Neuroglyph = require 'nnn.Neuroglyph'
+nnn.gu.Neuroglyph = nnn.Neuroglyph
+
+-- Create a Neuroglyph from nested structure
+function nnn.gu.neuroglyph(nested, config)
+    return nnn.Neuroglyph.fromNested(nested, config)
+end
+
+-- Create a Neuroglyph from model
+function nnn.gu.neuroglyphFromModel(model, config)
+    return nnn.Neuroglyph.fromModel(model, config)
+end
+
 -- Display info about NNN-GU integration
 function nnn.gu.info()
-    print("=======================================================")
-    print("NNN-GU Integration")
-    print("=======================================================")
-    print("\nHybrid Modules:")
-    print("  nnn.GULinear(in, out, config)   - Linear for nested ObserverseTensors")
-    print("  nnn.GUReLU(config)              - ReLU activation")
-    print("  nnn.GUTanh(config)              - Tanh activation")
-    print("  nnn.GUSigmoid(config)           - Sigmoid activation")
-    print("  nnn.GUSoftMax(config)           - SoftMax activation")
-    print("  nnn.GUDropout(p, config)        - Dropout")
-    print("  nnn.GUBatchNormalization(n)     - Batch normalization")
-    print("  nnn.GULayer(fiber_dim, config)  - Full GU layer")
-    print("  nnn.GUSequential()              - Sequential container")
-    print("\nGU-Aware Criteria:")
-    print("  nnn.GUMSECriterion(config)      - MSE for nested GU")
-    print("  nnn.GUBCECriterion(w, config)   - BCE for nested GU")
-    print("  nnn.ObserverseMSECriterion()    - Weighted Observerse MSE")
-    print("\nCore Functions:")
-    print("  nnn.transformGU(module, config) - Wrap any nn module")
-    print("  nnn.gu.isObserverse(input)      - Check for ObserverseTensor")
-    print("  nnn.gu.flatten(input)           - Flatten to list")
-    print("  nnn.gu.map(input, func)         - Map over structure")
-    print("  nnn.gu.clone(input)             - Deep clone")
-    print("  nnn.gu.depth(input)             - Get nesting depth")
-    print("  nnn.gu.randomNested(struct, n)  - Random nested structure")
-    print("=======================================================")
+    print("═══════════════════════════════════════════════════════")
+    print("  NNN-GU Integration: Geonestor Neuroglyphs")
+    print("═══════════════════════════════════════════════════════")
+    print("")
+    print("  GEONESTOR NEUROGLYPH")
+    print("  Geometric Nested Tensor Neural Gauge-Awareness Symmetry")
+    print("")
+    print("  Components:")
+    print("    GEO    - Geometric Unity (Observerse, gauge, fibers)")
+    print("    NESTOR - Nested Tensor structures (recursive trees)")
+    print("    NEURO  - Neural network operations (learnable)")
+    print("    GLYPH  - Symbolic representation (type signatures)")
+    print("")
+    print("───────────────────────────────────────────────────────")
+    print("  Neuroglyph API:")
+    print("    nnn.Neuroglyph.create(config)     - Create neuroglyph")
+    print("    nnn.gu.neuroglyph(nested)         - From nested structure")
+    print("    nnn.gu.neuroglyphFromModel(model) - From model")
+    print("    glyph:signature()                 - Get unique signature")
+    print("    glyph:primeSignature()            - Prime factorization")
+    print("    glyph:createModel(config)         - Generate model")
+    print("    glyph:visualize()                 - ASCII visualization")
+    print("")
+    print("───────────────────────────────────────────────────────")
+    print("  Hybrid Modules:")
+    print("    nnn.GULinear(in, out, config)   - Linear layer")
+    print("    nnn.GUReLU(config)              - ReLU activation")
+    print("    nnn.GUTanh(config)              - Tanh activation")
+    print("    nnn.GUSigmoid(config)           - Sigmoid activation")
+    print("    nnn.GUSoftMax(config)           - SoftMax activation")
+    print("    nnn.GUDropout(p, config)        - Dropout")
+    print("    nnn.GUBatchNormalization(n)     - Batch normalization")
+    print("    nnn.GULayer(fiber_dim, config)  - Full GU layer")
+    print("    nnn.GUSequential()              - Sequential container")
+    print("")
+    print("───────────────────────────────────────────────────────")
+    print("  GU-Aware Criteria:")
+    print("    nnn.GUMSECriterion(config)      - MSE for nested GU")
+    print("    nnn.GUBCECriterion(w, config)   - BCE for nested GU")
+    print("    nnn.ObserverseMSECriterion()    - Weighted Observerse MSE")
+    print("")
+    print("───────────────────────────────────────────────────────")
+    print("  Utility Functions:")
+    print("    nnn.transformGU(module, config) - Wrap any nn module")
+    print("    nnn.gu.isObserverse(input)      - Check ObserverseTensor")
+    print("    nnn.gu.flatten(input)           - Flatten to list")
+    print("    nnn.gu.map(input, func)         - Map over structure")
+    print("    nnn.gu.clone(input)             - Deep clone")
+    print("    nnn.gu.depth(input)             - Get nesting depth")
+    print("    nnn.gu.count(input)             - Count ObserverseTensors")
+    print("    nnn.gu.randomNested(struct, n)  - Random nested structure")
+    print("═══════════════════════════════════════════════════════")
 end
 
 return nnn
