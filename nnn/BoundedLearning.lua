@@ -898,6 +898,225 @@ function BoundedLearning.visualizeDuality()
 end
 
 -- ============================================================================
+-- Hemispheric Duality: Lightface vs Boldface (Darkface)
+-- ============================================================================
+--
+-- The Lightface/Boldface hierarchy in descriptive set theory mirrors the
+-- hemispheric duality of mathematics itself:
+--
+--   LIGHTFACE (Left Hemisphere)        BOLDFACE/DARKFACE (Right Hemisphere)
+--   ════════════════════════════════════════════════════════════════════════
+--   Σ⁰₁ = Recursively Enumerable   ≅   Σ⁰₁ = Open Sets (topology)
+--   Π⁰₁ = Co-RE (decidable)        ≅   Π⁰₁ = Closed Sets
+--   Δ⁰₁ = Computable               ≅   Δ⁰₁ = Clopen Sets
+--
+--   Arithmetic Hierarchy               Projective Hierarchy
+--   Sequential, Algorithmic            Holistic, Topological
+--   Turing Machine (paths)             Continuous Space (whole)
+--   Syntax, Grammar                    Semantics, Meaning
+--   Enumeration (step by step)         Radiation (all at once)
+--   The Labyrinth (finite paths)       The Hypersphere (infinite whole)
+--
+-- KEY INSIGHT: RE sets ARE the lightface version of Open sets!
+-- The computable is the discrete skeleton of the continuous.
+--
+-- The Euclidean Labyrinth of Echoes:
+--   Euclidean space is an AFFINE PATCH carved out of projective space.
+--   The labyrinth is INSIDE the hypersphere.
+--   Lightface enumeration traces paths through the labyrinth.
+--   Darkface projection radiates the whole structure.
+--
+--                         ∞ (point at infinity)
+--                              ╱╲
+--                             ╱  ╲
+--              PROJECTIVE    ╱    ╲   HYPERSPHERE
+--              (Darkface)   ╱      ╲  radiates OUT
+--                          ╱        ╲
+--                         ╱──────────╲
+--                        │  EUCLIDEAN │
+--                        │  LABYRINTH │  ← Lightface enumerates
+--                        │  (affine)  │     paths through here
+--                        │  ≋≋≋≋≋≋≋≋  │
+--                        │  echoes... │
+--                         ╲──────────╱
+--
+-- ============================================================================
+
+BoundedLearning.HemisphericDuality = {
+    -- The Lightface (Left) Hemisphere: Constructive, Sequential
+    lightface = {
+        name = 'Lightface',
+        hemisphere = 'Left',
+        mode = 'Constructive',
+
+        -- Descriptive set theory
+        sigma_0_1 = 'Recursively Enumerable (RE)',
+        pi_0_1 = 'Co-RE (complement of RE)',
+        delta_0_1 = 'Computable (decidable)',
+
+        -- Cognitive mode
+        processing = 'Sequential',
+        style = 'Algorithmic',
+        focus = 'Syntax',
+        action = 'Enumerate',
+
+        -- Geometric metaphor
+        space = 'Labyrinth',
+        operation = 'Path-tracing',
+        boundedness = 'Finite steps',
+
+        -- Mathematical character
+        hierarchy = 'Arithmetic',
+        definability = 'Number quantifiers (∀n, ∃n)',
+        complexity = 'Turing degrees'
+    },
+
+    -- The Boldface/Darkface (Right) Hemisphere: Holistic, Continuous
+    boldface = {
+        name = 'Boldface (Darkface)',
+        hemisphere = 'Right',
+        mode = 'Holistic',
+
+        -- Descriptive set theory
+        sigma_0_1 = 'Open Sets',
+        pi_0_1 = 'Closed Sets',
+        delta_0_1 = 'Clopen Sets',
+
+        -- Cognitive mode
+        processing = 'Parallel',
+        style = 'Topological',
+        focus = 'Semantics',
+        action = 'Radiate',
+
+        -- Geometric metaphor
+        space = 'Hypersphere',
+        operation = 'Projection',
+        boundedness = 'Infinite whole',
+
+        -- Mathematical character
+        hierarchy = 'Projective',
+        definability = 'Real quantifiers (∀x∈ℝ, ∃x∈ℝ)',
+        complexity = 'Wadge degrees'
+    },
+
+    -- The correspondence between faces
+    correspondence = {
+        {lightface = 'RE set', boldface = 'Open set',
+         insight = 'Enumeration ≅ Openness'},
+        {lightface = 'Computable function', boldface = 'Continuous function',
+         insight = 'Computability ≅ Continuity'},
+        {lightface = 'Halting', boldface = 'Limit point',
+         insight = 'Termination ≅ Convergence'},
+        {lightface = 'Oracle', boldface = 'Parameter',
+         insight = 'Relative computation ≅ Parametrized space'},
+        {lightface = 'Degree', boldface = 'Dimension',
+         insight = 'Computational complexity ≅ Geometric complexity'}
+    }
+}
+
+-- The Euclidean Labyrinth embedded in Projective Hypersphere
+BoundedLearning.LabyrinthHypersphere = {
+    -- Projective space structure
+    projective = {
+        description = 'Projective space P^n = S^n / antipodal',
+        contains = 'All directions, including infinity',
+        topology = 'Compact (no escape)',
+        operation = 'Projection from center'
+    },
+
+    -- Euclidean space as affine patch
+    euclidean = {
+        description = 'Affine patch = P^n minus hyperplane at infinity',
+        contains = 'Finite points only',
+        topology = 'Non-compact (extends to infinity)',
+        operation = 'Translation, linear combination'
+    },
+
+    -- The labyrinth metaphor
+    labyrinth = {
+        walls = 'Computational barriers (undecidable)',
+        paths = 'Computable sequences',
+        echoes = 'Reflected/projected images',
+        center = 'Starting point (input)',
+        exit = 'Halting state (output)'
+    },
+
+    -- The hypersphere metaphor
+    hypersphere = {
+        surface = 'All limit points',
+        interior = 'Finite approximations',
+        antipodes = 'Projective identification',
+        radiation = 'Simultaneous view of all paths',
+        infinity = 'Point at infinity (projective closure)'
+    }
+}
+
+-- Visualize the hemispheric duality
+function BoundedLearning.visualizeHemispheres()
+    print("╔═══════════════════════════════════════════════════════════════════════════╗")
+    print("║     HEMISPHERIC DUALITY: LIGHTFACE vs BOLDFACE (DARKFACE)                 ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║   LIGHTFACE (Left Hemisphere)      BOLDFACE (Right Hemisphere)            ║")
+    print("║   ═══════════════════════════      ═══════════════════════════            ║")
+    print("║                                                                           ║")
+    print("║   Σ⁰₁ = Recursively Enumerable    Σ⁰₁ = Open Sets                         ║")
+    print("║   Π⁰₁ = Co-RE (decidable)         Π⁰₁ = Closed Sets                       ║")
+    print("║   Δ⁰₁ = Computable                Δ⁰₁ = Clopen Sets                       ║")
+    print("║                                                                           ║")
+    print("║   Arithmetic Hierarchy            Projective Hierarchy                    ║")
+    print("║   Sequential processing           Parallel processing                     ║")
+    print("║   Syntax / Grammar                Semantics / Meaning                     ║")
+    print("║   Enumeration (step by step)      Radiation (all at once)                 ║")
+    print("║   Turing degrees                  Wadge degrees                           ║")
+    print("║                                                                           ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║            THE EUCLIDEAN LABYRINTH OF ECHOES                              ║")
+    print("║                                                                           ║")
+    print("║                           ∞ (projective infinity)                         ║")
+    print("║                               ╱    ╲                                      ║")
+    print("║                              ╱      ╲                                     ║")
+    print("║               PROJECTIVE    ╱        ╲    HYPERSPHERE                     ║")
+    print("║               (Darkface)   ╱          ╲   radiates OUT                    ║")
+    print("║                           ╱            ╲                                  ║")
+    print("║                          ╱──────────────╲                                 ║")
+    print("║                         │    EUCLIDEAN   │                                ║")
+    print("║                         │    LABYRINTH   │  ← Lightface traces            ║")
+    print("║                         │    (affine)    │    paths through here          ║")
+    print("║                         │   ≋≋≋≋≋≋≋≋≋≋   │                                ║")
+    print("║                         │   echoes...    │                                ║")
+    print("║                          ╲──────────────╱                                 ║")
+    print("║                                                                           ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║   KEY INSIGHT: RE sets ARE the lightface version of Open sets!            ║")
+    print("║                                                                           ║")
+    print("║   • Computability ≅ Continuity (Kreisel-Lacombe-Shoenfield)               ║")
+    print("║   • Enumeration ≅ Openness (a point is in an open set iff witnessed)      ║")
+    print("║   • The computable is the DISCRETE SKELETON of the continuous             ║")
+    print("║                                                                           ║")
+    print("╚═══════════════════════════════════════════════════════════════════════════╝")
+end
+
+-- The connection between hemispheres and geometric hierarchy
+function BoundedLearning.hemisphereToGeometry()
+    return {
+        lightface = {
+            primary = 'arithmetic',   -- GL: linear, sequential
+            secondary = 'analytic',   -- SO: measured steps
+            description = 'Enumerates through Affine/Euclidean space'
+        },
+        boldface = {
+            primary = 'projective',   -- Spin: double cover, holistic
+            secondary = 'singular',   -- Exceptional: boundary phenomena
+            description = 'Projects from Spinorial/Boundary space'
+        },
+        bridge = 'complex'  -- SU: where enumeration meets continuity
+    }
+end
+
+-- ============================================================================
 -- Integration with NNN
 -- ============================================================================
 
