@@ -476,8 +476,173 @@ BoundedLearning.GeometricHierarchy = {
         preserves = 'Degeneracy structure',
         parameters = function(n) return 0 end,  -- Measure zero
         description = 'Fixed points, degeneracies, exceptional loci'
+    },
+
+    -- Level 5: Finite / Discrete / Atomic
+    finite = {
+        number_system = 'Finite',
+        transformation = 'Discrete',
+        geometry = 'Combinatorial',
+        preserves = 'Counting structure (mod p)',
+        parameters = function(n) return n end,  -- Finite cardinality
+        description = 'Finite fields, discrete groups, combinatorics'
     }
 }
+
+-- ============================================================================
+-- Finite Geometry: The Exceptional Terminus
+-- ============================================================================
+--
+-- Finite Geometry IS Exceptional. It represents the discrete/atomic terminus
+-- where continuous deformation is completely exhausted:
+--
+--   DIVISION ALGEBRAS:    ℝ → ℂ → ℍ → 𝕆 → (end: non-associativity)
+--   GEOMETRY:             Affine → Euclidean → Hermitian → Spinorial → FINITE
+--   TRANSFORMATION:       GL → SO → SU → Spin → Exceptional → Discrete
+--
+-- The Exceptional Lie groups (G₂, F₄, E₆, E₇, E₈) arise from:
+--   • Octonions (𝕆): The non-associative boundary of division algebras
+--   • Finite geometries: 𝔽_q = 𝔽_p^n (fields of prime power order)
+--   • Sporadic structures: 27 lines on cubic surface, Leech lattice, etc.
+--
+-- KEY INSIGHT: Finite fields are the "atoms" of arithmetic.
+--   • Every field has characteristic 0 (like ℝ, ℂ) or p (like 𝔽_p)
+--   • Finite fields 𝔽_q exist iff q = p^n for prime p
+--   • They are the DISCRETE SKELETON underlying all continuous geometry
+--
+-- ============================================================================
+
+BoundedLearning.FiniteGeometry = {
+    -- The division algebra sequence (terminates at octonions)
+    divisionAlgebras = {
+        {name = 'Real', symbol = 'ℝ', dim = 1, associative = true, commutative = true},
+        {name = 'Complex', symbol = 'ℂ', dim = 2, associative = true, commutative = true},
+        {name = 'Quaternion', symbol = 'ℍ', dim = 4, associative = true, commutative = false},
+        {name = 'Octonion', symbol = '𝕆', dim = 8, associative = false, commutative = false}
+        -- NO MORE: Frobenius theorem - these are ALL division algebras over ℝ
+    },
+
+    -- The exceptional Lie groups (arise from octonions)
+    exceptionalGroups = {
+        G2 = {dim = 14, description = 'Automorphisms of octonions'},
+        F4 = {dim = 52, description = 'Automorphisms of exceptional Jordan algebra'},
+        E6 = {dim = 78, description = '27 lines on cubic surface'},
+        E7 = {dim = 133, description = 'Freudenthal magic square'},
+        E8 = {dim = 248, description = 'Largest exceptional, root lattice'}
+    },
+
+    -- Finite fields
+    finiteFields = {
+        -- F_p for prime p
+        primeFields = function(p) return {order = p, characteristic = p} end,
+        -- F_q for q = p^n
+        extensionFields = function(p, n) return {order = p^n, characteristic = p} end
+    }
+}
+
+-- Check if a number is prime (simple primality test)
+function BoundedLearning.isPrime(n)
+    if n < 2 then return false end
+    if n == 2 then return true end
+    if n % 2 == 0 then return false end
+    for i = 3, math.sqrt(n), 2 do
+        if n % i == 0 then return false end
+    end
+    return true
+end
+
+-- Check if n is a prime power (q = p^k for some prime p, k ≥ 1)
+function BoundedLearning.isPrimePower(n)
+    if n < 2 then return false, nil, nil end
+
+    -- Check if n itself is prime
+    if BoundedLearning.isPrime(n) then
+        return true, n, 1
+    end
+
+    -- Check if n = p^k for some prime p
+    for p = 2, math.sqrt(n) do
+        if BoundedLearning.isPrime(p) then
+            local k = 0
+            local m = n
+            while m % p == 0 do
+                m = m / p
+                k = k + 1
+            end
+            if m == 1 and k > 0 then
+                return true, p, k
+            end
+        end
+    end
+
+    return false, nil, nil
+end
+
+-- Check if a finite field of order n exists
+function BoundedLearning.finiteFieldExists(n)
+    return BoundedLearning.isPrimePower(n)
+end
+
+-- The connection: Exceptional ↔ Finite
+function BoundedLearning.exceptionalFiniteConnection()
+    return {
+        -- Octonions give rise to exceptional groups
+        octonion_to_G2 = 'Aut(𝕆) = G₂',
+        -- Finite projective planes
+        projective_plane = 'PG(2, q) exists iff q is prime power',
+        -- 27 lines on cubic ↔ E₆
+        cubic_surface = '27 lines form E₆ root system',
+        -- Discrete subgroups
+        discrete_subgroups = 'Finite groups embed in continuous Lie groups at singular loci'
+    }
+end
+
+-- Visualize the Exceptional/Finite connection
+function BoundedLearning.visualizeFinite()
+    print("╔═══════════════════════════════════════════════════════════════════╗")
+    print("║         FINITE GEOMETRY: THE EXCEPTIONAL TERMINUS                 ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   DIVISION ALGEBRAS (Frobenius theorem: these are ALL of them)    ║")
+    print("║   ─────────────────────────────────────────────────────────────   ║")
+    print("║   ℝ (1D) → ℂ (2D) → ℍ (4D) → 𝕆 (8D) → [END: non-associative]      ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   EXCEPTIONAL LIE GROUPS (arise from octonions)                   ║")
+    print("║   ─────────────────────────────────────────────────────────────   ║")
+    print("║   G₂ (14D)  - Automorphisms of 𝕆                                  ║")
+    print("║   F₄ (52D)  - Automorphisms of exceptional Jordan algebra         ║")
+    print("║   E₆ (78D)  - 27 lines on cubic surface                           ║")
+    print("║   E₇ (133D) - Freudenthal magic square                            ║")
+    print("║   E₈ (248D) - Largest exceptional, root lattice                   ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   FINITE FIELDS: THE ATOMS OF ARITHMETIC                          ║")
+    print("║   ─────────────────────────────────────────────────────────────   ║")
+    print("║   𝔽_q exists ⟺ q = p^n for prime p                                ║")
+    print("║                                                                   ║")
+    print("║   𝔽₂, 𝔽₃, 𝔽₄, 𝔽₅, 𝔽₇, 𝔽₈, 𝔽₉, 𝔽₁₁, 𝔽₁₃, ...                       ║")
+    print("║   (2) (3) (2²) (5) (7) (2³) (3²) (11) (13)                        ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   THE CONNECTION                                                  ║")
+    print("║   ─────────────────────────────────────────────────────────────   ║")
+    print("║                                                                   ║")
+    print("║   Continuous ─────────────────────────────────→ Discrete          ║")
+    print("║       │                                             │             ║")
+    print("║       │    Exceptional = BOUNDARY/SINGULAR          │             ║")
+    print("║       │    where continuous meets discrete          │             ║")
+    print("║       │                                             │             ║")
+    print("║       ▼                                             ▼             ║")
+    print("║   Lie groups                                  Finite groups       ║")
+    print("║   Smooth manifolds                            Discrete sets       ║")
+    print("║   ℝ, ℂ                                        𝔽_p, 𝔽_q            ║")
+    print("║                                                                   ║")
+    print("╚═══════════════════════════════════════════════════════════════════╝")
+end
 
 -- The inclusion chain: GL ⊃ O ⊃ SO ⊃ ... but Spin is a COVER not subset
 BoundedLearning.HierarchyChain = {
