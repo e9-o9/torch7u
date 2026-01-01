@@ -588,6 +588,16 @@ if threads and nn then
 end
 
 -- ============================================================================
+-- NNN (Nested Neural Nets) Module Registration
+-- ============================================================================
+-- Register the nnn module for functional operators on nested tensors
+
+if pcall(require, 'nnn') then
+   torch7u.register('nnn', require('nnn'), {'nn'})
+   torch7u.utils.log("INFO", "NNN (Nested Neural Nets) module loaded", "torch7u")
+end
+
+-- ============================================================================
 -- Initialization Complete
 -- ============================================================================
 
