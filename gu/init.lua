@@ -22,6 +22,9 @@ gu.GaugeTransformer = require 'gu.GaugeTransformer'
 gu.GeneralizedGaugeTransformer = require 'gu.GeneralizedGaugeTransformer'
 gu.GULayer = require 'gu.GULayer'
 
+-- Load Activations Module
+gu.activations = require 'gu.activations'
+
 -- ============================================================================
 -- Constants
 -- ============================================================================
@@ -254,6 +257,12 @@ function gu.info()
     print("  - GaugeTransformer: Gauge transformations (tilted, Lie algebra, parallel transport)")
     print("  - GeneralizedGaugeTransformer: Full transformer architecture with multi-head attention")
     print("  - GULayer: Composite GU dynamics layer")
+    print("\nSpecialized Activations (gu.activations):")
+    print("  - LieAlgebraActivation: Lie group structure-preserving")
+    print("  - CurvatureGate: Curvature-aware gating")
+    print("  - ParallelTransportActivation: Fiber-base coupled transport")
+    print("  - GaugeEquivariantActivation: Gauge symmetry-respecting")
+    print("  - SpinorActivation: Clifford algebra-aware spinor activation")
     print("\nGauge Transformer Features:")
     print("  - Structure groups: GL, SO, SU, Spin, U")
     print("  - Multi-head gauge attention")
