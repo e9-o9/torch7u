@@ -92,6 +92,28 @@ local model = gu.createModel({
     hidden_dim = 10,
     activation = true
 })
+
+-- Create a Generalized Gauge Transformer model
+local transformer_model = gu.createGaugeTransformerModel({
+    num_layers = 3,
+    fiber_dim = 10,
+    base_dim = 4,
+    num_heads = 4,
+    structure_group = 'SO',
+    use_attention = true,
+    use_residual = true,
+    use_layernorm = true,
+    dropout = 0.1
+})
+
+-- Create a hybrid model (GU layers + Gauge Transformer layers)
+local hybrid_model = gu.createHybridModel({
+    num_gu_layers = 2,
+    num_transformer_layers = 2,
+    fiber_dim = 10,
+    num_heads = 4,
+    structure_group = 'SO'
+})
 ```
 
 ## API Reference
@@ -155,10 +177,44 @@ local swervature = swerve:forward(observerse)
 
 ```lua
 local gauge = gu.GaugeTransformer(dim, {
-    gauge_type = 'tilted',  -- 'tilted', 'standard', 'inhomogeneous'
-    learnable = true
+    gauge_type = 'tilted',  -- 'tilted', 'standard', 'inhomogeneous', 'lie_algebra', 'parallel_transport'
+    structure_group = 'SO',  -- 'GL', 'SO', 'SU', 'Spin', 'U'
+    learnable = true,
+    coupling_strength = 0.1  -- For tilted gauge
 })
 local transformed = gauge:forward(observerse)
+
+-- Get the current gauge group element
+local g = gauge:getGaugeElement()
+
+-- Compute curvature (field strength)
+local F = gauge:curvature()
+```
+
+#### `gu.GeneralizedGaugeTransformer`
+
+The GeneralizedGaugeTransformer is a full transformer architecture for gauge field transformations:
+
+```lua
+local gen_gauge = gu.GeneralizedGaugeTransformer(dim, {
+    base_dim = 4,
+    num_heads = 4,
+    structure_group = 'SO',      -- 'GL', 'SO', 'SU', 'Spin', 'U'
+    use_attention = true,        -- Multi-head gauge attention
+    use_connection = false,      -- Learn gauge connection
+    use_curvature_reg = false,   -- Curvature regularization
+    use_residual = true,         -- Residual connections
+    use_layernorm = true,        -- Layer normalization
+    dropout = 0.1
+})
+
+local output = gen_gauge:forward(observerse)
+
+-- Get attention weights
+local attn = gen_gauge:getAttentionWeights()
+
+-- Compute curvature loss for regularization
+local curv_loss = gen_gauge:curvatureLoss()
 ```
 
 ### Layers
