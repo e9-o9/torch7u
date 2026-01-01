@@ -14,6 +14,13 @@ This package provides an easy and modular way to build and train simple or compl
    * [Criterions](doc/criterion.md#nn.Criterions): a list of all criterions, including [`Criterion`](doc/criterion.md#nn.Criterion), the abstract class;
    * [`MSECriterion`](doc/criterion.md#nn.MSECriterion): the Mean Squared Error criterion used for regression;
    * [`ClassNLLCriterion`](doc/criterion.md#nn.ClassNLLCriterion): the Negative Log Likelihood criterion used for classification;
+ * **NEW: Nested Neural Nets (NNN)**: Support for rooted-tree-like embeddings and metagraph structures:
+   * [`NestedNeuralNet`](NNN_DOCUMENTATION.md#nnnestedneuranet): Complete framework for nested neural networks with embeddings at each depth level;
+   * [`NestedEmbedding`](NNN_DOCUMENTATION.md#nnnestedembedding): Embedding module supporting arbitrary nesting of tensors (tuples of tuples);
+   * [`PrimeFactorType`](NNN_DOCUMENTATION.md#nnprimefactortype): Type system based on prime factorization of tensor shapes for metagraph-like structures;
+   * [`NestedTensor`](NNN_DOCUMENTATION.md#nnnestedtensor): Utilities for working with nested tensor structures;
+   * [NNN Documentation](NNN_DOCUMENTATION.md): Complete guide with examples and use cases;
+   * [NNN Examples](example_nnn.lua): Practical examples demonstrating all features;
  * Additional documentation:
    * [Overview](doc/overview.md#nn.overview.dok) of the package essentials including modules, containers and training;
    * [Training](doc/training.md#nn.traningneuralnet.dok): how to train a neural network using [`StochasticGradient`](doc/training.md#nn.StochasticGradient);
