@@ -1162,6 +1162,21 @@ function nnn.gu.neuroglyphFromModel(model, config)
     return nnn.Neuroglyph.fromModel(model, config)
 end
 
+-- ============================================================================
+-- Bounded Learning: The Correspondence Principle
+-- ============================================================================
+-- Bounded Learning unifies geometric neural networks with generative language
+-- models through a structural correspondence.
+-- ============================================================================
+
+nnn.BoundedLearning = require 'nnn.BoundedLearning'
+nnn.gu.BoundedLearning = nnn.BoundedLearning
+
+-- Visualize the GU ↔ GPT correspondence
+function nnn.gu.correspondence()
+    nnn.BoundedLearning.visualizeCorrespondence()
+end
+
 -- Display info about NNN-GU integration
 function nnn.gu.info()
     print("═══════════════════════════════════════════════════════")
