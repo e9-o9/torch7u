@@ -19,6 +19,7 @@ gu.ChimericBundle = require 'gu.ChimericBundle'
 gu.ShiabOperator = require 'gu.ShiabOperator'
 gu.SwerveModule = require 'gu.SwerveModule'
 gu.GaugeTransformer = require 'gu.GaugeTransformer'
+gu.GeneralizedGaugeTransformer = require 'gu.GeneralizedGaugeTransformer'
 gu.GULayer = require 'gu.GULayer'
 
 -- ============================================================================
@@ -149,16 +150,85 @@ function gu.createModel(config)
     config = config or {}
     local num_layers = config.num_layers or 3
     local hidden_dim = config.hidden_dim or gu.FIBER_DIM
-    
+
     local model = nn.Sequential()
-    
+
     for i = 1, num_layers do
         model:add(gu.GULayer(hidden_dim))
         if config.activation then
             model:add(gu.transform(nn.ReLU(), {applyTo = 'fiber'}))
         end
     end
-    
+
+    return model
+end
+
+-- Create a Generalized Gauge Transformer model
+function gu.createGaugeTransformerModel(config)
+    config = config or {}
+    local num_layers = config.num_layers or 3
+    local fiber_dim = config.fiber_dim or gu.FIBER_DIM
+    local base_dim = config.base_dim or gu.BASE_DIM
+    local num_heads = config.num_heads or 4
+    local structure_group = config.structure_group or 'SO'
+    local use_attention = config.use_attention ~= false
+    local use_residual = config.use_residual ~= false
+    local use_layernorm = config.use_layernorm ~= false
+    local dropout = config.dropout or 0.1
+
+    local model = nn.Sequential()
+
+    for i = 1, num_layers do
+        model:add(gu.GeneralizedGaugeTransformer(fiber_dim, {
+            base_dim = base_dim,
+            num_heads = num_heads,
+            structure_group = structure_group,
+            use_attention = use_attention,
+            use_residual = use_residual,
+            use_layernorm = use_layernorm,
+            dropout = dropout,
+            use_connection = config.use_connection or false,
+            use_curvature_reg = config.use_curvature_reg or false
+        }))
+    end
+
+    return model
+end
+
+-- Create a hybrid model with both GU layers and Generalized Gauge Transformers
+function gu.createHybridModel(config)
+    config = config or {}
+    local num_gu_layers = config.num_gu_layers or 2
+    local num_transformer_layers = config.num_transformer_layers or 2
+    local fiber_dim = config.fiber_dim or gu.FIBER_DIM
+    local base_dim = config.base_dim or gu.BASE_DIM
+
+    local model = nn.Sequential()
+
+    -- GU layers for initial processing
+    for i = 1, num_gu_layers do
+        model:add(gu.GULayer(fiber_dim, {
+            base_dim = base_dim,
+            use_swerve = true,
+            use_gauge = true,
+            activation = 'tanh',
+            use_residual = true
+        }))
+    end
+
+    -- Generalized Gauge Transformer layers
+    for i = 1, num_transformer_layers do
+        model:add(gu.GeneralizedGaugeTransformer(fiber_dim, {
+            base_dim = base_dim,
+            num_heads = config.num_heads or 4,
+            structure_group = config.structure_group or 'SO',
+            use_attention = true,
+            use_residual = true,
+            use_layernorm = true,
+            dropout = config.dropout or 0.1
+        }))
+    end
+
     return model
 end
 
@@ -181,8 +251,15 @@ function gu.info()
     print("  - ChimericBundle: 14D bundle vectors")
     print("  - ShiabOperator: Ship-in-a-bottle operator")
     print("  - SwerveModule: Swervature computation")
-    print("  - GaugeTransformer: Gauge transformations")
+    print("  - GaugeTransformer: Gauge transformations (tilted, Lie algebra, parallel transport)")
+    print("  - GeneralizedGaugeTransformer: Full transformer architecture with multi-head attention")
     print("  - GULayer: Composite GU dynamics layer")
+    print("\nGauge Transformer Features:")
+    print("  - Structure groups: GL, SO, SU, Spin, U")
+    print("  - Multi-head gauge attention")
+    print("  - Lie algebra parameterization with exponential map")
+    print("  - Connection-based parallel transport")
+    print("  - Curvature regularization")
     print("=======================================================")
 end
 
