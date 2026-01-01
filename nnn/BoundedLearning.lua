@@ -399,6 +399,176 @@ Both are instances of:
 end
 
 -- ============================================================================
+-- The Geometric Hierarchy of Gauge Structures
+-- ============================================================================
+--
+-- The gauge groups form a hierarchy corresponding to progressively richer
+-- geometric structures:
+--
+--   NUMBER SYSTEM        TRANSFORMATION        GEOMETRY
+--   ═══════════════════════════════════════════════════════
+--   Arithmetic      ←→   GL (Linear)      ←→  Affine
+--   Analytic        ←→   SO (Orthogonal)  ←→  Euclidean
+--   Complex         ←→   SU (Unitary)     ←→  Hermitian
+--   Projective      ←→   Spin             ←→  Spinorial
+--   ───────────────────────────────────────────────────────
+--   Singular        ←→   Exceptional      ←→  Boundary
+--
+-- Each level INCLUDES the previous while adding new structure:
+--   - GL: Preserves linear combinations (scaling, shearing)
+--   - SO: Preserves inner product (angles, lengths)
+--   - SU: Preserves complex inner product (phases)
+--   - Spin: Double cover of SO (projective, spinors)
+--   - Singular: Degeneracy points (boundaries, exceptional loci)
+--
+-- The Spin group moves through "affine-like" transformations in the sense
+-- that spinors are projective objects - they return to themselves only
+-- after 4π rotation, living in the double cover.
+--
+-- ============================================================================
+
+BoundedLearning.GeometricHierarchy = {
+    -- Level 0: Arithmetic / Linear / Affine
+    arithmetic = {
+        number_system = 'Arithmetic',
+        transformation = 'GL',
+        geometry = 'Affine',
+        preserves = 'Linear combinations',
+        parameters = function(n) return n * n end,
+        description = 'Scaling, shearing, linear maps'
+    },
+
+    -- Level 1: Analytic / Orthogonal / Euclidean
+    analytic = {
+        number_system = 'Analytic',
+        transformation = 'SO',
+        geometry = 'Euclidean',
+        preserves = 'Inner product (lengths, angles)',
+        parameters = function(n) return n * (n - 1) / 2 end,
+        description = 'Rotations, reflections (det=1)'
+    },
+
+    -- Level 2: Complex / Unitary / Hermitian
+    complex = {
+        number_system = 'Complex',
+        transformation = 'SU',
+        geometry = 'Hermitian',
+        preserves = 'Complex inner product (phases)',
+        parameters = function(n) return n * n - 1 end,
+        description = 'Phase-preserving, quantum symmetry'
+    },
+
+    -- Level 3: Projective / Spin / Spinorial
+    projective = {
+        number_system = 'Projective',
+        transformation = 'Spin',
+        geometry = 'Spinorial',
+        preserves = 'Orientation double cover',
+        parameters = function(n) return n * (n - 1) / 2 end,  -- Same as SO (double cover)
+        description = 'Spinors, 4π periodicity, projective reps'
+    },
+
+    -- Level 4: Singular / Exceptional / Boundary
+    singular = {
+        number_system = 'Singular',
+        transformation = 'Exceptional',
+        geometry = 'Boundary',
+        preserves = 'Degeneracy structure',
+        parameters = function(n) return 0 end,  -- Measure zero
+        description = 'Fixed points, degeneracies, exceptional loci'
+    }
+}
+
+-- The inclusion chain: GL ⊃ O ⊃ SO ⊃ ... but Spin is a COVER not subset
+BoundedLearning.HierarchyChain = {
+    'arithmetic',  -- GL(n)
+    'analytic',    -- SO(n)
+    'complex',     -- SU(n)
+    'projective',  -- Spin(n)
+    'singular'     -- Exceptional/Boundary
+}
+
+-- Map gauge group to hierarchy level
+function BoundedLearning.gaugeToLevel(gauge_type)
+    local mapping = {
+        GL = 'arithmetic',
+        SO = 'analytic',
+        O = 'analytic',
+        SU = 'complex',
+        U = 'complex',
+        Spin = 'projective',
+        Pin = 'projective'
+    }
+    return mapping[gauge_type] or 'arithmetic'
+end
+
+-- Get the geometric "richness" of a gauge type (0-4)
+function BoundedLearning.geometricRichness(gauge_type)
+    local levels = {
+        GL = 0,
+        O = 1, SO = 1,
+        U = 2, SU = 2,
+        Spin = 3, Pin = 3,
+        Exceptional = 4
+    }
+    return levels[gauge_type] or 0
+end
+
+-- Check if one gauge type is "richer" than another
+function BoundedLearning.isGeometricallyRicher(gauge1, gauge2)
+    return BoundedLearning.geometricRichness(gauge1) >
+           BoundedLearning.geometricRichness(gauge2)
+end
+
+-- Visualize the geometric hierarchy
+function BoundedLearning.visualizeHierarchy()
+    print("╔═══════════════════════════════════════════════════════════════════╗")
+    print("║           GEOMETRIC HIERARCHY OF GAUGE STRUCTURES                 ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   NUMBER SYSTEM      TRANSFORMATION      GEOMETRY                 ║")
+    print("║   ─────────────────────────────────────────────────────────────   ║")
+    print("║                                                                   ║")
+    print("║   Arithmetic    ←→   GL (Linear)     ←→  Affine                   ║")
+    print("║        │                  │                 │                     ║")
+    print("║        ▼                  ▼                 ▼                     ║")
+    print("║   Analytic      ←→   SO (Orthogonal) ←→  Euclidean                ║")
+    print("║        │                  │                 │                     ║")
+    print("║        ▼                  ▼                 ▼                     ║")
+    print("║   Complex       ←→   SU (Unitary)    ←→  Hermitian                ║")
+    print("║        │                  │                 │                     ║")
+    print("║        ▼                  ▼                 ▼                     ║")
+    print("║   Projective    ←→   Spin            ←→  Spinorial                ║")
+    print("║        │                  │                 │                     ║")
+    print("║        ▼                  ▼                 ▼                     ║")
+    print("║   Singular      ←→   Exceptional     ←→  Boundary                 ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   PRESERVED STRUCTURE AT EACH LEVEL:                              ║")
+    print("║                                                                   ║")
+    print("║   GL:   v ↦ Av           (linear combinations)                    ║")
+    print("║   SO:   ⟨u,v⟩ = ⟨Au,Av⟩   (inner product)                         ║")
+    print("║   SU:   ⟨u,v⟩_ℂ = ⟨Au,Av⟩_ℂ (complex inner product)               ║")
+    print("║   Spin: ψ ↦ -ψ after 2π   (double cover / projective)             ║")
+    print("║                                                                   ║")
+    print("╠═══════════════════════════════════════════════════════════════════╣")
+    print("║                                                                   ║")
+    print("║   KEY INSIGHT: Spin is PROJECTIVE                                 ║")
+    print("║                                                                   ║")
+    print("║   Spinors live in the double cover of SO(n).                      ║")
+    print("║   They are projective objects: ψ and -ψ represent the same        ║")
+    print("║   physical state, but the phase matters for interference.         ║")
+    print("║                                                                   ║")
+    print("║   This is why Spin relates to PROJECTIVE geometry:                ║")
+    print("║   • Points at infinity (projective completion)                    ║")
+    print("║   • Homogeneous coordinates                                       ║")
+    print("║   • The \"affine patch\" is where spinors look like vectors        ║")
+    print("║                                                                   ║")
+    print("╚═══════════════════════════════════════════════════════════════════╝")
+end
+
+-- ============================================================================
 -- The Category-Degree Duality (Maximal Contrast Principle)
 -- ============================================================================
 --
