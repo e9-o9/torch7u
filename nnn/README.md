@@ -440,6 +440,259 @@ local predictions = classifier:forward(input)
 local loss = criterion:forward(predictions, target)
 ```
 
+## GU (Geometric Unity) Integration
+
+The NNN module provides deep integration with the GU (Geometric Unity) framework, allowing nested neural networks to work with ObserverseTensor structures.
+
+### Overview
+
+The NNN-GU integration enables:
+- Processing nested structures of ObserverseTensors
+- Applying neural operations to base and/or fiber components
+- GU-aware criteria for loss computation
+- Seamless composition of nested geometric structures
+
+### Quick Start with GU
+
+```lua
+local nnn = require 'nnn'
+local gu = require 'gu'
+
+-- Create a GU-aware linear layer
+local guLinear = nnn.GULinear(10, 20, {applyTo = 'fiber'})
+
+-- Works with ObserverseTensors
+local obs = gu.randomObserverse(4)
+local output = guLinear:forward(obs)
+
+-- Works with nested ObserverseTensors
+local nested = {
+    gu.randomObserverse(4),
+    {gu.randomObserverse(4), gu.randomObserverse(4)}
+}
+local nested_output = guLinear:forward(nested)
+```
+
+### GU-Aware Transform
+
+```lua
+-- Transform any nn module for GU support
+local guModule = nnn.transformGU(nn.Linear(10, 10), {
+    applyTo = 'fiber',    -- 'base', 'fiber', or 'both'
+    preserveGU = true,     -- Preserve ObserverseTensor type
+    maxDepth = 10          -- Maximum nesting depth
+})
+```
+
+### Hybrid GU Modules
+
+Pre-built modules for nested ObserverseTensors:
+
+| Module | Description |
+|--------|-------------|
+| `nnn.GULinear(in, out, config)` | Linear layer for nested ObserverseTensors |
+| `nnn.GUReLU(config)` | ReLU activation |
+| `nnn.GUTanh(config)` | Tanh activation |
+| `nnn.GUSigmoid(config)` | Sigmoid activation |
+| `nnn.GUSoftMax(config)` | SoftMax activation |
+| `nnn.GUDropout(p, config)` | Dropout |
+| `nnn.GUBatchNormalization(n, config)` | Batch normalization |
+| `nnn.GULayer(fiber_dim, config)` | Full GU layer (Swerve + Gauge) |
+| `nnn.GUSequential()` | Sequential container for GU models |
+
+### GU-Specific Criteria
+
+```lua
+-- MSE criterion for nested ObserverseTensors
+local criterion = nnn.GUMSECriterion({
+    applyTo = 'fiber',      -- Apply to fiber only
+    aggregation = 'mean'    -- 'mean', 'sum', or 'max'
+})
+
+-- Weighted Observerse MSE (different weights for base/fiber)
+local weighted = nnn.ObserverseMSECriterion({
+    baseWeight = 0.3,
+    fiberWeight = 0.7
+})
+
+-- Other criteria
+nnn.GUBCECriterion(weights, config)
+nnn.GUClassNLLCriterion(weights, config)
+nnn.GUCrossEntropyCriterion(weights, config)
+```
+
+### GU Utility Functions
+
+```lua
+-- Check if input is ObserverseTensor
+nnn.gu.isObserverse(input)  -- true/false
+
+-- Flatten nested ObserverseTensors to list
+local list = nnn.gu.flatten(nested_input)
+
+-- Count ObserverseTensors in structure
+local count = nnn.gu.count(nested_input)
+
+-- Get nesting depth
+local depth = nnn.gu.depth(nested_input)
+
+-- Map function over all ObserverseTensors
+local mapped = nnn.gu.map(input, function(obs)
+    return gu.ObserverseTensor.create(obs.base * 2, obs.fiber)
+end)
+
+-- Clone nested structure
+local cloned = nnn.gu.clone(nested_input)
+
+-- Generate random nested structure from template
+local template = {branch1 = 1, branch2 = {a = 1, b = 1}}
+local random = nnn.gu.randomNested(template, batch_size)
+```
+
+### Building GU Networks
+
+```lua
+-- Complete GU neural network
+local model = nnn.GUSequential()
+model:add(nnn.GULinear(10, 20, {applyTo = 'fiber'}))
+model:add(nnn.GUReLU({applyTo = 'fiber'}))
+model:add(nnn.GUDropout(0.1, {applyTo = 'fiber'}))
+model:add(nnn.GULinear(20, 10, {applyTo = 'fiber'}))
+
+-- Using full GU layers with Swerve and Gauge
+local gu_model = nnn.GUSequential()
+gu_model:add(nnn.GULayer(10, {
+    use_swerve = true,
+    use_gauge = true,
+    gauge_type = 'tilted',
+    use_residual = true
+}))
+```
+
+### Training with NNN-GU
+
+```lua
+local model = nnn.GUSequential()
+model:add(nnn.GULinear(10, 10, {applyTo = 'fiber'}))
+
+local criterion = nnn.GUMSECriterion({applyTo = 'fiber'})
+local params, gradParams = model:getParameters()
+
+-- Training loop
+for epoch = 1, num_epochs do
+    gradParams:zero()
+    local output = model:forward(input)
+    local loss = criterion:forward(output, target)
+    local gradOutput = criterion:backward(output, target)
+    model:backward(input, gradOutput)
+    params:add(-learning_rate, gradParams)
+end
+```
+
+### GU Integration Info
+
+Display available GU integration features:
+
+```lua
+nnn.gu.info()
+```
+
+### Geonestor Neuroglyph
+
+A **Geonestor Neuroglyph** is a geometric nested tensor neural gauge-awareness symmetry structure - the unified formalism for NNN-GU integration.
+
+#### Components
+
+| Component | Meaning |
+|-----------|---------|
+| **GEO** | Geometric Unity (Observerse, gauge transformations, fiber bundles) |
+| **NESTOR** | Nested Tensor structures (recursive tree-shaped data) |
+| **NEURO** | Neural network operations (learnable transformations) |
+| **GLYPH** | Symbolic representation (type signatures, symmetry invariants) |
+
+#### Creating Neuroglyphs
+
+```lua
+local Neuroglyph = nnn.Neuroglyph
+
+-- Create directly
+local glyph = Neuroglyph.create({
+    name = 'my_glyph',
+    baseDim = 4,
+    fiberDim = 10,
+    gaugeGroup = 'SO',
+    depth = 2
+})
+
+-- From nested structure
+local nested = {gu.randomObserverse(4), {gu.randomObserverse(4)}}
+local glyph = nnn.gu.neuroglyph(nested, {name = 'derived'})
+
+-- From model
+local model = nnn.GUSequential()
+model:add(nnn.GULinear(10, 10))
+local glyph = nnn.gu.neuroglyphFromModel(model)
+```
+
+#### Neuroglyph API
+
+```lua
+-- Signatures and invariants
+glyph:signature()       -- "G[name:4|10|SO|d2]"
+glyph:primeSignature()  -- {base = {2,2}, fiber = {2,5}}
+
+-- Compatibility checks
+glyph:isGaugeCompatible(other)
+glyph:isStructurallyCompatible(other)
+
+-- Composition (tensor product)
+local composed = glyph:compose(other, {name = 'product'})
+
+-- Model generation
+local model = glyph:createModel({
+    numLayers = 3,
+    activation = 'tanh',
+    dropout = 0.1
+})
+
+-- Create specific layers
+local layer = glyph:createLayer('full', {use_swerve = true})
+
+-- Visualization
+glyph:visualize()  -- ASCII art display
+```
+
+#### Visualization Output
+
+```
+╔══════════════════════════════════════════════════════╗
+║            GEONESTOR NEUROGLYPH                      ║
+╠══════════════════════════════════════════════════════╣
+║  Name:      my_glyph                                 ║
+║  Type:      composite                                ║
+║  Signature: G[my_glyph:4|10|SO|d2]                   ║
+╠══════════════════════════════════════════════════════╣
+║  GEOMETRY                                            ║
+║    Base Space:    4-dimensional                      ║
+║    Fiber Space:   10-dimensional                     ║
+║    Chimeric Dim:  14-dimensional                     ║
+╠══════════════════════════════════════════════════════╣
+║  SYMMETRY                                            ║
+║    Gauge Group:   SO (Special Orthogonal)            ║
+║    Nesting Depth: 2                                  ║
+╠══════════════════════════════════════════════════════╣
+║  PRIME SIGNATURE                                     ║
+║    Base:  [2·2]                                      ║
+║    Fiber: [2·5]                                      ║
+╚══════════════════════════════════════════════════════╝
+```
+
+### See Also
+
+- [gu_integration_example.lua](gu_integration_example.lua) - Comprehensive GU examples
+- [Neuroglyph.lua](Neuroglyph.lua) - Neuroglyph implementation
+- [GU README](../gu/README.md) - Geometric Unity module documentation
+
 ## Future Extensions
 
 ### Operad Gadgets (Planned)
