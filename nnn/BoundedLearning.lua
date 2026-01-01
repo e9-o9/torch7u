@@ -1117,6 +1117,178 @@ function BoundedLearning.hemisphereToGeometry()
 end
 
 -- ============================================================================
+-- Archetypal Triad: Degree × Category → Morph
+-- ============================================================================
+--
+-- The generative principle unifying all dualities:
+--
+--   DEGREE (Lightface)  ×  CATEGORY (Darkface)  →  MORPH (Interface)
+--   ═══════════════════════════════════════════════════════════════
+--   Axial Strut            Radial Spin             Vortical Spiral
+--   Sequential             Simultaneous            Helical
+--   Through                Around                  Through-Around
+--   Line                   Circle                  Helix
+--   Translation            Rotation                Screw motion
+--   Enumeration            Radiation               Transformation
+--   Turing                 Topology                Morphism
+--
+--                              MORPH
+--                           (Spiral/Vortex)
+--                                ◉
+--                              ╱   ╲
+--                            ╱       ╲
+--                          ╱           ╲
+--       DEGREE ══════════╱═══════════════╲══════════ CATEGORY
+--    (Axial Strut)      ▼                 ▼      (Radial Spin)
+--          │                                          ○
+--          │            INTERFACE                    ╱│╲
+--          │              ZONE                      ╱ │ ╲
+--          ▼                                       ╱  │  ╲
+--     Sequential ─────────► SPIRAL ◄─────── Simultaneous
+--                          (Helix)
+--
+-- This is the primordial generative act:
+--   • Axial goes THROUGH (like time, like sequence, like proof)
+--   • Radial goes AROUND (like space, like structure, like type)
+--   • Spiral combines both (like becoming, like transformation, like morph)
+--
+-- Physical manifestations:
+--   • DNA helix (genetic code)
+--   • Electromagnetic wave (E ⊥ B, propagating)
+--   • Spinor in spacetime (rotation + translation)
+--   • Vortex in fluid (axial flow + radial circulation)
+--
+-- Mathematical manifestations:
+--   • Functor (maps structure through transformation)
+--   • Natural transformation (morphism between functors)
+--   • Fiber bundle (base × fiber → total, section spirals through)
+--   • Shiab operator (twists fiber as it traverses base)
+--
+-- ============================================================================
+
+BoundedLearning.ArchetypalTriad = {
+    -- The three archetypes
+    degree = {
+        name = 'Degree',
+        face = 'Lightface',
+        geometry = 'Axial Strut',
+        motion = 'Translation',
+        mode = 'Sequential',
+        symbol = '│',  -- vertical line
+        action = 'Goes THROUGH',
+        generates = 'Enumeration, proof, computation'
+    },
+
+    category = {
+        name = 'Category',
+        face = 'Darkface',
+        geometry = 'Radial Spin',
+        motion = 'Rotation',
+        mode = 'Simultaneous',
+        symbol = '○',  -- circle
+        action = 'Goes AROUND',
+        generates = 'Structure, type, invariant'
+    },
+
+    morph = {
+        name = 'Morph',
+        face = 'Interface',
+        geometry = 'Vortical Spiral',
+        motion = 'Screw (helix)',
+        mode = 'Transformational',
+        symbol = '◉',  -- spiral/target
+        action = 'Goes THROUGH-AROUND',
+        generates = 'Transformation, becoming, functor'
+    },
+
+    -- The generative equation
+    equation = 'Degree × Category → Morph',
+    geometric = 'Axial × Radial → Spiral',
+    logical = 'Proof × Type → Term',
+    physical = 'Time × Space → Event',
+
+    -- Physical examples
+    physical_examples = {
+        {name = 'DNA', axial = 'Sugar-phosphate backbone', radial = 'Base pairs', spiral = 'Double helix'},
+        {name = 'EM wave', axial = 'Propagation direction', radial = 'E,B field oscillation', spiral = 'Circularly polarized light'},
+        {name = 'Spinor', axial = 'Worldline', radial = 'Spin', spiral = '4π rotation = identity'},
+        {name = 'Vortex', axial = 'Core flow', radial = 'Circulation', spiral = 'Helical streamlines'},
+        {name = 'Galaxy', axial = 'Angular momentum', radial = 'Orbital motion', spiral = 'Spiral arms'}
+    },
+
+    -- Mathematical examples
+    mathematical_examples = {
+        {name = 'Fiber bundle', axial = 'Base space', radial = 'Fiber', spiral = 'Section/Connection'},
+        {name = 'Functor', axial = 'Object map', radial = 'Morphism map', spiral = 'Natural transformation'},
+        {name = 'Proof', axial = 'Deduction steps', radial = 'Type constraints', spiral = 'Term construction'},
+        {name = 'Shiab', axial = 'Base traversal', radial = 'Gauge rotation', spiral = 'Covariant derivative'}
+    }
+}
+
+-- Visualize the Archetypal Triad
+function BoundedLearning.visualizeTriad()
+    print("╔═══════════════════════════════════════════════════════════════════════════╗")
+    print("║      ARCHETYPAL TRIAD: DEGREE × CATEGORY → MORPH                          ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║                              ◉ MORPH                                      ║")
+    print("║                         (Vortical Spiral)                                 ║")
+    print("║                           Interface                                       ║")
+    print("║                            ╱     ╲                                        ║")
+    print("║                          ╱         ╲                                      ║")
+    print("║                        ╱             ╲                                    ║")
+    print("║                      ╱                 ╲                                  ║")
+    print("║      DEGREE ═══════╱═══════════════════╲═══════ CATEGORY                  ║")
+    print("║   (Axial Strut)                              (Radial Spin)                ║")
+    print("║     Lightface                                  Darkface                   ║")
+    print("║         │                                         ○                       ║")
+    print("║         │                                        ╱│╲                      ║")
+    print("║         │         ══════════════════            ╱ │ ╲                     ║")
+    print("║         ▼         THROUGH + AROUND             ╱  │  ╲                    ║")
+    print("║    Sequential ──────► SPIRAL ◄─────── Simultaneous                        ║")
+    print("║                       (Helix)                                             ║")
+    print("║                                                                           ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║   THE GENERATIVE PRINCIPLE:                                               ║")
+    print("║                                                                           ║")
+    print("║   • Axial (Degree)  : Goes THROUGH  → Sequential enumeration              ║")
+    print("║   • Radial (Category): Goes AROUND  → Simultaneous structure              ║")
+    print("║   • Spiral (Morph)  : THROUGH-AROUND → Transformation/Becoming            ║")
+    print("║                                                                           ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║   MANIFESTATIONS:                                                         ║")
+    print("║   ─────────────────────────────────────────────────────────────────────   ║")
+    print("║                                                                           ║")
+    print("║   Physical:   DNA helix, EM wave, spinor, vortex, galaxy                  ║")
+    print("║   Mathematical: Fiber bundle, functor, proof, Shiab operator              ║")
+    print("║   Cognitive:  Syntax × Semantics → Understanding                          ║")
+    print("║   Temporal:   Past × Future → Present (the eternal now)                   ║")
+    print("║                                                                           ║")
+    print("╠═══════════════════════════════════════════════════════════════════════════╣")
+    print("║                                                                           ║")
+    print("║   \"The spiral is how the line learns to embrace the circle.\"              ║")
+    print("║                                                                           ║")
+    print("╚═══════════════════════════════════════════════════════════════════════════╝")
+end
+
+-- The spiral as morphism: given degree d and category c, compute the morph
+function BoundedLearning.spiral(degree_value, category_structure)
+    -- The morph combines axial progression with radial constraint
+    return {
+        type = 'morph',
+        axial = degree_value,           -- how far through
+        radial = category_structure,    -- what structure preserved
+        spiral = {                       -- the combination
+            phase = degree_value,        -- phase along helix
+            invariant = category_structure,  -- preserved by rotation
+            transformation = 'degree × category → morph'
+        }
+    }
+end
+
+-- ============================================================================
 -- Integration with NNN
 -- ============================================================================
 
